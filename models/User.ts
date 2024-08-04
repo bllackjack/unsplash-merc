@@ -7,6 +7,7 @@ export class User {
   public instagramUsername: string;
   public totalLikes: number;
   public totalPhotos: number;
+  public username: string;
 
   constructor(
     bio: string,
@@ -16,7 +17,8 @@ export class User {
     location: string,
     instagramUsername: string,
     totalLikes: number,
-    totalPhotos: number
+    totalPhotos: number,
+    username: string
   ) {
     this.bio = bio;
     this.id = id;
@@ -26,6 +28,7 @@ export class User {
     this.instagramUsername = instagramUsername;
     this.totalLikes = totalLikes;
     this.totalPhotos = totalPhotos;
+    this.username = username;
   }
 
   public static createFromDto(dto: UserDetailsDTO): User {
@@ -34,11 +37,12 @@ export class User {
       dto.bio,
       dto.id,
       name,
-      dto.profile_image.medium,
+      dto.profile_image.large,
       dto.location,
       dto.instagram_username,
       dto.total_likes,
-      dto.total_photos
+      dto.total_photos,
+      dto.username
     );
   }
 }
@@ -51,10 +55,12 @@ export interface UserDetailsDTO {
   last_name: string;
   location: string;
   profile_image: {
+    large: string;
     medium: string;
   };
   total_likes: number;
   total_photos: number;
+  username: string;
 }
 
 export class Name {
@@ -68,9 +74,15 @@ export class Name {
 
   public getFullname() {
     if (this.firstName || this.lastName) {
-      return `By: ${this.firstName || ""} ${this.lastName || ""}`;
+      return `${this.firstName || ""} ${this.lastName || ""}`;
     } else {
       return "";
     }
+  }
+
+  public get initials() {
+    const firstInitial = this.firstName?.charAt(0).toUpperCase();
+    const lastInitial = this.lastName?.charAt(0).toUpperCase();
+    return `${firstInitial}${lastInitial}`;
   }
 }

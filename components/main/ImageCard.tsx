@@ -11,6 +11,8 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { IoHeart, IoCloudDownloadOutline, IoEye } from "react-icons/io5";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar } from "../ui/avatar";
 
 interface ImageCardProps {
   photo: Photo;
@@ -22,9 +24,19 @@ const ImageCard = ({ photo }: ImageCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">
-          {photo.user.name.getFullname()}
+        <CardTitle className="text-xl flex items-center gap-6">
+          <Avatar>
+            <AvatarImage src={photo.user.profileImagePath} />
+            <AvatarFallback>{photo.user.name.initials}</AvatarFallback>
+          </Avatar>
+          <Link
+            href={`/user/${photo.user.username}`}
+            className="hover:underline"
+          >
+            {photo.user.name.getFullname()}
+          </Link>
         </CardTitle>
+        <CardDescription>{photo.description}</CardDescription>
       </CardHeader>
       <CardContent
         className="relative w-full h-72"
@@ -57,11 +69,9 @@ const ImageCard = ({ photo }: ImageCardProps) => {
         )}
       </CardContent>
       <CardFooter className="flex flex-col gap-4">
-        <p className="italic">{photo.description}</p>
         <h5 className="hover:underline text-sm">
-          <Link href={`/user/${photo.user.id}`}>
-            View more by{" "}
-            {photo.user.instagramUsername || photo.user.name.firstName}
+          <Link href={`/user/${photo.user.username}`}>
+            View more by {photo.user.username || photo.user.name.firstName}
           </Link>
         </h5>
       </CardFooter>
