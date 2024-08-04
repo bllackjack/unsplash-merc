@@ -11,7 +11,7 @@ instance.interceptors.request.use(
   (config) => {
     config.headers[
       "Authorization"
-    ] = `Bearer ${process.env.NEXT_PUBLIC_UNSPLASH_CLIENT_KEY}`;
+    ] = `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_CLIENT_KEY}`;
 
     return config;
   },
