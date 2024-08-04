@@ -65,4 +65,12 @@ export class Name {
     this.firstName = firstName;
     this.lastName = lastName;
   }
+
+  public getFullname() {
+    if (this.firstName || this.lastName) {
+      return `By: ${this.firstName || ""} ${this.lastName || ""}`;
+    } else {
+      return "";
+    }
+  }
 }
